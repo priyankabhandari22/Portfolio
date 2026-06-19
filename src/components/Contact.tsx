@@ -3,11 +3,7 @@
 import { useState, FormEvent } from "react";
 import SectionWrapper from "./SectionWrapper";
 
-// ── Setup Steps ──
-// 1. Go to https://formspree.io and sign up (free tier: 50 submissions/month)
-// 2. Create a new form, copy the form ID
-// 3. Paste it below (e.g. "xvgpwkdj")
-// 4. Test by submitting the form — you'll receive emails at your registered address
+
 const FORMSPREE_ID = "mgobjlzl";
 
 const socials = [

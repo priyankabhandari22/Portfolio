@@ -19,12 +19,41 @@ const boldIndices = new Set([5, 8]);
 export default function BootScreen() {
   const [visibleCount, setVisibleCount] = useState(0);
   const [phase, setPhase] = useState<"lines" | "bar" | "ready" | "done">("lines");
+  const [skipped, setSkipped] = useState(false);
 
   useEffect(() => {
+    const navEntry = performance?.getEntriesByType?.("navigation")?.[0] as PerformanceNavigationTiming | undefined;
+    const navType = navEntry?.type;
+    const bootDone = sessionStorage.getItem("bootDone") === "true";
+
+    if (navType === "back_forward" && bootDone) {
+      setPhase("done");
+      return;
+    }
+
+    sessionStorage.removeItem("bootDone");
+
+    const skip = () => setSkipped(true);
+    window.addEventListener("keydown", skip);
+    window.addEventListener("click", skip);
+    return () => {
+      window.removeEventListener("keydown", skip);
+      window.removeEventListener("click", skip);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!skipped) return;
+    sessionStorage.setItem("bootDone", "true");
+    setPhase("done");
+  }, [skipped]);
+
+  useEffect(() => {
+    if (phase !== "lines") return;
     if (visibleCount >= bootLines.length) return;
     const t = setTimeout(() => setVisibleCount((c) => c + 1), 600);
     return () => clearTimeout(t);
-  }, [visibleCount]);
+  }, [visibleCount, phase]);
 
   useEffect(() => {
     if (visibleCount < bootLines.length) return;
@@ -41,7 +70,10 @@ export default function BootScreen() {
 
   useEffect(() => {
     if (phase !== "ready") return;
-    const t = setTimeout(() => setPhase("done"), 800);
+    const t = setTimeout(() => {
+      sessionStorage.setItem("bootDone", "true");
+      setPhase("done");
+    }, 800);
     return () => clearTimeout(t);
   }, [phase]);
 
