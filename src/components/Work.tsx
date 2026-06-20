@@ -52,12 +52,13 @@ const projects = [
   {
     title: "ClinerVa",
     description:
-      "AI-powered healthcare platform designed to match patients with suitable clinical trials based on medical requirements and eligibility criteria.",
+      "AI-Powered Clinical Trial Eligibility & Matching Engine — AI system that matches patients to suitable clinical trials using anonymized health data and eligibility criteria. Provides accurate, explainable recommendations while ensuring privacy.",
     tags: ["Full Stack", "AI Integration"],
     features: [
-      "AI-powered matching",
-      "Clinical trial recommendation",
-      "Patient requirement analysis",
+      "AI-powered patient-trial matching",
+      "Eligibility criteria analysis",
+      "Explainable recommendations",
+      "Privacy-preserving health data processing",
     ],
     github: "https://github.com/priyankabhandari22/ClinerVa-v1.git",
     live: "https://cliner-va-v1.vercel.app/",
