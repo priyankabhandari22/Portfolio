@@ -123,7 +123,7 @@ function TimelineItem({
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative py-16 md:py-28 px-6 scroll-mt-20">
+    <section id="experience" className="relative py-16 md:py-28 px-6 scroll-mt-24">
       <div className="max-w-4xl mx-auto">
         <SectionWrapper>
           <p

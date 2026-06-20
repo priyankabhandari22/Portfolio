@@ -98,24 +98,17 @@ export default function Header() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-[#010810]/95 backdrop-blur-xl border-t border-white/5"
           >
-            <div className="px-6 py-4 flex flex-col gap-1">
-              {navLinks.map((link) => {
-                const sectionId = link.href.slice(1);
-                return (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={`py-3 px-4 rounded-[6px] transition-all text-sm font-mono tracking-wider ${
-                      active === sectionId
-                        ? "text-cyan-400 bg-cyan-500/5 border border-cyan-500/20"
-                        : "text-gray-400 hover:text-white hover:bg-white/5"
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                );
-              })}
+            <div className="px-6 py-4 flex flex-col gap-3">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="text-gray-400 hover:text-white transition-colors py-2"
+                >
+                  {link.label}
+                </a>
+              ))}
             </div>
           </motion.div>
         )}

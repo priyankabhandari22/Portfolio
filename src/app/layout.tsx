@@ -38,7 +38,6 @@ export const metadata: Metadata = {
     "React",
     "Next.js",
   ],
-  icons: [{ rel: "icon", url: "/globe.svg" }],
   openGraph: {
     title: "Priyanka Bhandari | Full Stack Developer",
     description:
