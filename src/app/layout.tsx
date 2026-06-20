@@ -6,6 +6,7 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  preload: false,
 });
 
 const orbitron = Orbitron({
@@ -15,8 +16,9 @@ const orbitron = Orbitron({
 
 const rajdhani = Rajdhani({
   variable: "--font-rajdhani",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
+  preload: false,
 });
 
 const shareTechMono = Share_Tech_Mono({
