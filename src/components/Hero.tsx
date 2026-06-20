@@ -90,7 +90,7 @@ export default function Hero() {
             <a href="#work" className="btn-charge">
               View Work
             </a>
-            <a href="/Priyanka-Bhandari Resume-1.pdf" download="Priyanka-Bhandari-Resume.pdf" className="btn-charge">
+            <a href="/Priyanka-Bhandari-Resume-1.pdf" download="Priyanka-Bhandari-Resume-1.pdf" className="btn-charge">
               Download Resume
             </a>
           </div>

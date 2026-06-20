@@ -38,7 +38,7 @@ const skillCategories = [
 
 export default function Arsenal() {
   return (
-    <section id="arsenal" className="relative py-16 md:py-28 px-6">
+    <section id="arsenal" className="relative py-16 md:py-28 px-6 scroll-mt-20">
       <div className="max-w-7xl mx-auto">
         <SectionWrapper>
           <p

@@ -180,7 +180,7 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
 
 export default function Work() {
   return (
-    <section id="work" className="relative py-16 md:py-28 px-6">
+    <section id="work" className="relative py-16 md:py-28 px-6 scroll-mt-20">
       <div className="max-w-7xl mx-auto">
         <SectionWrapper>
           <p
