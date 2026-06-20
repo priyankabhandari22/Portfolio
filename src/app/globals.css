@@ -46,6 +46,11 @@ code, pre, .font-mono {
   body { cursor: none; }
 }
 
+a, button, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
 /* ── Keyframes ── */
 
 @keyframes float {

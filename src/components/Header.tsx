@@ -103,8 +103,14 @@ export default function Header() {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-gray-400 hover:text-white transition-colors py-2"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMobileOpen(false);
+                    setTimeout(() => {
+                      document.getElementById(link.href.slice(1))?.scrollIntoView({ behavior: "smooth" });
+                    }, 200);
+                  }}
+                  className="text-gray-400 transition-colors py-2"
                 >
                   {link.label}
                 </a>
