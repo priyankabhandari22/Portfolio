@@ -31,7 +31,7 @@ const skillCategories = [
   },
   {
     title: "Core Concepts",
-    skills: ["DSA", "OOP", "DBMS", "Operating Systems", "Problem Solving"],
+    skills: ["DSA", "OOP", "DBMS", "Operating Systems","Computer Networks", "Problem Solving"],
     accent: "amber",
   },
 ];
