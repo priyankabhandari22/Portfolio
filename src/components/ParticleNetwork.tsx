@@ -150,10 +150,10 @@ export default function ParticleNetwork() {
       },
     });
 
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
 
     const animate = () => {
-      const t = clock.getElapsedTime();
+      const t = timer.getElapsed();
       const pos = particleGeo.attributes.position.array as Float32Array;
 
       for (let i = 0; i < count; i++) {
