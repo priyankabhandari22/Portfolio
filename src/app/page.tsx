@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
 import GridBackground from "@/components/GridBackground";
 import CrackBackground from "@/components/CrackBackground";
+import ParticleNetwork from "@/components/ParticleNetwork";
 import Ripple from "@/components/Ripple";
 import SectionDivider from "@/components/SectionDivider";
 
@@ -19,6 +20,7 @@ export default function Home() {
       <Ripple />
       <GridBackground />
       <CrackBackground />
+      <ParticleNetwork />
       <Header />
       <main className="relative z-10">
         <Hero />
