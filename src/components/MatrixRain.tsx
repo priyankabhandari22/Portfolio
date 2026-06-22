@@ -11,15 +11,15 @@ const chars = "01アイウエオカキクケコサシスセソタチツテトナ
 
 function createCharTexture(char: string): THREE.CanvasTexture {
   const canvas = document.createElement("canvas");
-  canvas.width = 32;
-  canvas.height = 48;
+  canvas.width = 48;
+  canvas.height = 64;
   const ctx = canvas.getContext("2d")!;
-  ctx.clearRect(0, 0, 32, 48);
-  ctx.fillStyle = "#00d4ff";
-  ctx.font = "bold 28px monospace";
+  ctx.clearRect(0, 0, 48, 64);
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "bold 36px monospace";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText(char, 16, 24);
+  ctx.fillText(char, 24, 32);
   const tex = new THREE.CanvasTexture(canvas);
   tex.needsUpdate = true;
   return tex;
@@ -41,10 +41,10 @@ export default function MatrixRain() {
     if (!container) return;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x010810, 0.035);
+    scene.fog = new THREE.FogExp2(0x010810, 0.02);
 
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 80);
-    camera.position.set(0, 0, 25);
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 60);
+    camera.position.set(0, 0, 8);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -52,46 +52,49 @@ export default function MatrixRain() {
     container.appendChild(renderer.domElement);
 
     const drops: Drop[] = [];
-    const columnCount = 30;
-    const baseSpeed = 0.08;
+    const columnCount = 25;
+    const baseSpeed = 0.1;
     let speedMultiplier = 1;
 
     for (let i = 0; i < columnCount; i++) {
       const char = chars[Math.floor(Math.random() * chars.length)];
       const tex = createCharTexture(char);
+      const color = Math.random() > 0.7 ? "#ffd700" : "#00d4ff";
       const mat = new THREE.SpriteMaterial({
         map: tex,
+        color: color,
         transparent: true,
-        opacity: 0.3 + Math.random() * 0.5,
+        opacity: 0.6 + Math.random() * 0.4,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
       });
       const sprite = new THREE.Sprite(mat);
-      const z = -5 - Math.random() * 35;
+      const z = -3 - Math.random() * 15;
       sprite.position.set(
-        (Math.random() - 0.5) * 40,
-        (Math.random() - 0.5) * 25,
+        (Math.random() - 0.5) * 30,
+        (Math.random() - 0.5) * 20,
         z
       );
-      const scale = 0.4 + (z + 40) / 50 * 0.6;
-      sprite.scale.set(scale * 0.7, scale, 1);
+      const scale = 1 + (z + 18) / 20 * 2;
+      sprite.scale.set(scale * 0.6, scale, 1);
       scene.add(sprite);
 
       drops.push({
         x: sprite.position.x,
         y: sprite.position.y,
         z,
-        speed: baseSpeed + Math.random() * 0.06,
+        speed: baseSpeed + Math.random() * 0.08,
         sprite,
       });
     }
 
     let extraDrops: Drop[] = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 8; i++) {
       const char = chars[Math.floor(Math.random() * chars.length)];
       const tex = createCharTexture(char);
       const mat = new THREE.SpriteMaterial({
         map: tex,
+        color: "#ffd700",
         transparent: true,
         opacity: 0,
         blending: THREE.AdditiveBlending,
@@ -99,13 +102,13 @@ export default function MatrixRain() {
       });
       const sprite = new THREE.Sprite(mat);
       sprite.position.set(
-        (Math.random() - 0.5) * 40,
-        -15,
-        -5 - Math.random() * 35
+        (Math.random() - 0.5) * 30,
+        -12,
+        -3 - Math.random() * 15
       );
       const z = sprite.position.z;
-      const scale = 0.4 + (z + 40) / 50 * 0.6;
-      sprite.scale.set(scale * 0.7, scale, 1);
+      const scale = 1 + (z + 18) / 20 * 2;
+      sprite.scale.set(scale * 0.6, scale, 1);
       sprite.visible = false;
       scene.add(sprite);
 
@@ -113,7 +116,7 @@ export default function MatrixRain() {
         x: sprite.position.x,
         y: sprite.position.y,
         z,
-        speed: baseSpeed * 2 + Math.random() * 0.1,
+        speed: baseSpeed * 2 + Math.random() * 0.15,
         sprite,
       });
     }
@@ -146,7 +149,7 @@ export default function MatrixRain() {
             d.sprite.visible = true;
             gsap.to(d.sprite.material, { opacity: 0.5, duration: 0.15 });
             d.y = -15;
-            d.x = (Math.random() - 0.5) * 40;
+            d.x = (Math.random() - 0.5) * 30;
             d.sprite.position.x = d.x;
           });
         }
@@ -161,7 +164,7 @@ export default function MatrixRain() {
         d.y += d.speed * speedMultiplier;
         if (d.y > 12) {
           d.y = -12;
-          d.x = (Math.random() - 0.5) * 40;
+          d.x = (Math.random() - 0.5) * 30;
           const newChar = chars[Math.floor(Math.random() * chars.length)];
           (d.sprite.material as THREE.SpriteMaterial).map = createCharTexture(newChar);
           (d.sprite.material as THREE.SpriteMaterial).needsUpdate = true;
