@@ -23,7 +23,7 @@ export default function ParticleNetwork() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    const count = 300;
+    const count = 100;
     const radius = 25;
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
@@ -125,7 +125,6 @@ export default function ParticleNetwork() {
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
-    const hoverIndex = useRef(-1);
 
     const onMouseMove = (e: MouseEvent) => {
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
