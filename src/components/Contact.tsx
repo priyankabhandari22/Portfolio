@@ -6,6 +6,42 @@ import SectionWrapper from "./SectionWrapper";
 
 const FORMSPREE_ID = "mgobjlzl";
 
+interface Errors {
+  name?: string;
+  email?: string;
+  message?: string;
+}
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const urlPattern = /https?:\/\//i;
+const spamPattern = /(<[^>]*>|http|www\.|\[url\])/i;
+
+function validateName(v: string): string | undefined {
+  const trimmed = v.trim();
+  if (!trimmed) return "Name is required";
+  if (trimmed.length < 2) return "Name must be at least 2 characters";
+  if (trimmed.length > 100) return "Name is too long (max 100 characters)";
+  if (urlPattern.test(trimmed)) return "Name cannot contain URLs";
+  return undefined;
+}
+
+function validateEmail(v: string): string | undefined {
+  const trimmed = v.trim();
+  if (!trimmed) return "Email is required";
+  if (!emailRegex.test(trimmed)) return "Please enter a valid email address";
+  if (trimmed.length > 254) return "Email is too long";
+  return undefined;
+}
+
+function validateMessage(v: string): string | undefined {
+  const trimmed = v.trim();
+  if (!trimmed) return "Message is required";
+  if (trimmed.length < 10) return "Message must be at least 10 characters";
+  if (trimmed.length > 5000) return "Message is too long (max 5000 characters)";
+  if (spamPattern.test(trimmed)) return "Message contains invalid content";
+  return undefined;
+}
+
 const socials = [
   { label: "GitHub", href: "https://github.com/priyankabhandari22", icon: (
     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -23,12 +59,25 @@ const socials = [
 
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errors, setErrors] = useState<Errors>({});
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("sending");
     const form = e.currentTarget;
     const data = new FormData(form);
+    const name = (data.get("name") as string) || "";
+    const email = (data.get("email") as string) || "";
+    const message = (data.get("message") as string) || "";
+
+    const newErrors: Errors = {
+      name: validateName(name),
+      email: validateEmail(email),
+      message: validateMessage(message),
+    };
+    setErrors(newErrors);
+    if (newErrors.name || newErrors.email || newErrors.message) return;
+
+    setStatus("sending");
     try {
       const res = await fetch(form.action, {
         method: "POST",
@@ -37,6 +86,7 @@ export default function Contact() {
       });
       if (res.ok) {
         setStatus("sent");
+        setErrors({});
         form.reset();
       } else {
         setStatus("error");
@@ -79,8 +129,14 @@ export default function Contact() {
                   name="name"
                   required
                   placeholder="Your Name"
+                  onChange={() => setErrors((p) => ({ ...p, name: undefined }))}
+                  onBlur={(e) => {
+                    const err = validateName(e.target.value);
+                    if (err) setErrors((p) => ({ ...p, name: err }));
+                  }}
                   className="w-full px-4 py-3 rounded-[6px] bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 transition-colors text-sm font-mono"
                 />
+                {errors.name && <p className="text-red-400 text-[11px] mt-1 font-mono">{errors.name}</p>}
               </div>
               <div>
                 <input
@@ -88,8 +144,14 @@ export default function Contact() {
                   name="email"
                   required
                   placeholder="Your Email"
+                  onChange={() => setErrors((p) => ({ ...p, email: undefined }))}
+                  onBlur={(e) => {
+                    const err = validateEmail(e.target.value);
+                    if (err) setErrors((p) => ({ ...p, email: err }));
+                  }}
                   className="w-full px-4 py-3 rounded-[6px] bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 transition-colors text-sm font-mono"
                 />
+                {errors.email && <p className="text-red-400 text-[11px] mt-1 font-mono">{errors.email}</p>}
               </div>
               <div>
                 <textarea
@@ -97,8 +159,14 @@ export default function Contact() {
                   rows={4}
                   required
                   placeholder="Your Message"
+                  onChange={() => setErrors((p) => ({ ...p, message: undefined }))}
+                  onBlur={(e) => {
+                    const err = validateMessage(e.target.value);
+                    if (err) setErrors((p) => ({ ...p, message: err }));
+                  }}
                   className="w-full px-4 py-3 rounded-[6px] bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 transition-colors text-sm font-mono resize-none"
                 />
+                {errors.message && <p className="text-red-400 text-[11px] mt-1 font-mono">{errors.message}</p>}
               </div>
               <button
                 type="submit"
