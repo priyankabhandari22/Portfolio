@@ -118,6 +118,21 @@ a, button, [role="button"] {
   to { transform: perspective(500px) rotateX(60deg) translateY(60px); }
 }
 
+@keyframes aurora-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(8%, 6%) scale(1.08); }
+  66% { transform: translate(-5%, -4%) scale(0.95); }
+}
+@keyframes aurora-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-7%, -5%) scale(0.92); }
+  66% { transform: translate(6%, 8%) scale(1.06); }
+}
+@keyframes aurora-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(10%, -8%) scale(1.12); }
+}
+
 @keyframes ripple-expand {
   0% { width: 0; height: 0; opacity: 0.8; }
   to { width: 400px; height: 400px; opacity: 0; }

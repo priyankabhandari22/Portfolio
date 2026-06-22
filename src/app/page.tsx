@@ -8,7 +8,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
 import GridBackground from "@/components/GridBackground";
-import MatrixRain from "@/components/MatrixRain";
+import AuroraBackground from "@/components/AuroraBackground";
 import Ripple from "@/components/Ripple";
 import SectionDivider from "@/components/SectionDivider";
 
@@ -18,7 +18,7 @@ export default function Home() {
       <Cursor />
       <Ripple />
       <GridBackground />
-      <MatrixRain />
+      <AuroraBackground />
       <Header />
       <main className="relative z-10">
         <Hero />
