@@ -46,7 +46,7 @@ export default function About() {
           <SectionWrapper>
             <div ref={cardRef} onMouseMove={handleMove} onMouseLeave={handleLeave} className="relative w-full max-w-[280px] md:max-w-[384px] mx-auto aspect-square tilt-card transition-transform duration-150 ease-out" style={{ transformStyle: "preserve-3d" }}>
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-amber-500/10 rounded-2xl blur-2xl" />
-              <div className="relative w-full h-full rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+              <div className="relative w-full h-full rounded-2xl bg-[#010810] border border-white/[0.08] overflow-hidden">
                 <Image src={profilePic} alt="Priyanka Bhandari" fill className="object-cover" sizes="(max-width: 768px) 280px, 384px" />
               </div>
             </div>
