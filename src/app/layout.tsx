@@ -59,7 +59,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${orbitron.variable} ${rajdhani.variable} ${shareTechMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <BootScreen />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
