@@ -1,6 +1,10 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function SectionWrapper({
   children,
@@ -10,31 +14,46 @@ export default function SectionWrapper({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setRevealed(true);
-          observer.disconnect();
-        }
+    const children = el.children;
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%",
+        toggleActions: "play none none none",
       },
-      { threshold: 0.1 }
+    });
+
+    tl.fromTo(
+      el,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
     );
 
-    observer.observe(el);
-    return () => observer.disconnect();
+    if (children.length > 1) {
+      tl.fromTo(
+        children,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: "power2.out" },
+        "-=0.2"
+      );
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach((st) => {
+        if (st.vars.trigger === el || el.contains(st.vars.trigger as Node)) {
+          st.kill();
+        }
+      });
+    };
   }, []);
 
   return (
-    <div
-      ref={ref}
-      className={`section-reveal ${revealed ? "revealed" : ""} ${className}`}
-    >
+    <div ref={ref} className={className}>
       {children}
     </div>
   );

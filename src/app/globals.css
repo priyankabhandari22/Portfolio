@@ -318,27 +318,7 @@ a, button, [role="button"] {
   animation: btn-flash 0.15s ease-out;
 }
 
-/* ── Section Reveal ── */
-
-.section-reveal {
-  opacity: 0;
-  will-change: transform, opacity;
-}
-
-.section-reveal.revealed {
-  animation: section-reveal 0.8s ease-out forwards;
-}
-
-@media (max-width: 768px) {
-  .section-reveal.revealed {
-    animation: section-reveal-mobile 0.5s ease-out forwards;
-  }
-}
-
-@keyframes section-reveal-mobile {
-  0% { opacity: 0; transform: translateY(15px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
+/* ── Section Reveal (legacy — GSAP handles now) ── */
 
 /* ── Section Divider ── */
 

@@ -56,10 +56,10 @@ export default function Hero() {
 
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <div
-          className="section-reveal"
           style={{
             opacity: revealed ? 1 : 0,
-            animation: revealed ? "section-reveal 0.8s ease-out forwards" : "none",
+            transform: revealed ? "translateY(0)" : "translateY(30px)",
+            transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
           }}
         >
           <p
