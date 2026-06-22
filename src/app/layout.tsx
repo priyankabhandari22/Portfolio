@@ -29,6 +29,7 @@ const shareTechMono = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://priyankabhandari.vercel.app"),
   title: "Priyanka Bhandari | Full Stack Developer",
   description:
     "Premium portfolio of Priyanka Bhandari — Full Stack Developer, MERN Developer & Problem Solver. Building scalable, modern web applications.",
@@ -46,7 +47,9 @@ export const metadata: Metadata = {
     description:
       "Full Stack Developer specializing in building scalable, modern web applications.",
     type: "website",
+    images: [{ url: "/profile.png", width: 512, height: 512 }],
   },
+  icons: { icon: "/profile.png" },
 };
 
 export default function RootLayout({
