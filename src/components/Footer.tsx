@@ -8,9 +8,9 @@ export default function Footer() {
         </p>
         <p className="text-gray-600 text-sm">
           Crafted with{" "}
-          <span className="text-cyan-400">Next.js</span>,{" "}
-          <span className="text-cyan-400">Tailwind</span> &{" "}
-          <span className="text-amber-400">Framer Motion</span>
+          <span className="text-cyan-400">Three.js</span>,{" "}
+          <span className="text-cyan-400">GSAP</span> &{" "}
+          <span className="text-amber-400">Next.js</span>
         </p>
       </div>
     </footer>
