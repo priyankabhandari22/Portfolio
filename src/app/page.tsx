@@ -8,7 +8,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
 import GridBackground from "@/components/GridBackground";
-import HexBackground from "@/components/HexBackground";
+import GlobeBackground from "@/components/GlobeBackground";
 import Ripple from "@/components/Ripple";
 import SectionDivider from "@/components/SectionDivider";
 
@@ -18,7 +18,7 @@ export default function Home() {
       <Cursor />
       <Ripple />
       <GridBackground />
-      <HexBackground />
+      <GlobeBackground />
       <Header />
       <main className="relative z-10">
         <Hero />
