@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Orbitron, Rajdhani, Share_Tech_Mono } from "next/font/google";
 import BootScreen from "@/components/BootScreen";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -60,7 +61,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <BootScreen />
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );
