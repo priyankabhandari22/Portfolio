@@ -153,6 +153,7 @@ export default function ParticleNetwork() {
     const timer = new THREE.Timer();
 
     const animate = () => {
+      timer.update();
       const t = timer.getElapsed();
       const pos = particleGeo.attributes.position.array as Float32Array;
 
