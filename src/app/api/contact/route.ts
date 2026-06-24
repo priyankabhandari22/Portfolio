@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { containsAbuse, DISPOSABLE_DOMAINS } from "@/lib/filter";
 
 const FORMSPREE_ID = "mgobjlzl";
 const ALLOWED_DOMAIN = "gmail.com";
@@ -16,12 +17,38 @@ export async function POST(req: NextRequest) {
   ipMap.set(ip, now);
 
   const formData = await req.formData();
+  const name = (formData.get("name") as string) || "";
   const email = (formData.get("email") as string) || "";
+  const message = (formData.get("message") as string) || "";
 
   if (!email.endsWith(`@${ALLOWED_DOMAIN}`)) {
     return NextResponse.json(
-      { error: `Only @${ALLOWED_DOMAIN} emails are accepted.` },
+      { error: `Only @${ALLOWED_DOMAIN} emails are accepted.`, field: "email" },
       { status: 403 },
+    );
+  }
+
+  const domain = email.split("@").pop()?.toLowerCase() || "";
+  if (DISPOSABLE_DOMAINS.has(domain)) {
+    return NextResponse.json(
+      { error: "Temporary email addresses are not allowed.", field: "email" },
+      { status: 403 },
+    );
+  }
+
+  const abuseName = containsAbuse(name);
+  if (abuseName) {
+    return NextResponse.json(
+      { error: "Inappropriate language in name.", field: "name" },
+      { status: 400 },
+    );
+  }
+
+  const abuseMsg = containsAbuse(message);
+  if (abuseMsg) {
+    return NextResponse.json(
+      { error: "Inappropriate language in message.", field: "message" },
+      { status: 400 },
     );
   }
 

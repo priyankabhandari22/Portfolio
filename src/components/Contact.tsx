@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import SectionWrapper from "./SectionWrapper";
+import { containsAbuse } from "@/lib/filter";
 
 
 interface Errors {
@@ -20,6 +21,8 @@ function validateName(v: string): string | undefined {
   if (trimmed.length < 2) return "Name must be at least 2 characters";
   if (trimmed.length > 100) return "Name is too long (max 100 characters)";
   if (urlPattern.test(trimmed)) return "Name cannot contain URLs";
+  const abuse = containsAbuse(trimmed);
+  if (abuse) return abuse;
   return undefined;
 }
 
@@ -29,6 +32,8 @@ function validateEmail(v: string): string | undefined {
   if (!emailRegex.test(trimmed)) return "Please enter a valid email address";
   if (trimmed.length > 254) return "Email is too long";
   if (!trimmed.endsWith("@gmail.com")) return "Only @gmail.com emails are accepted";
+  const abuse = containsAbuse(trimmed);
+  if (abuse) return abuse;
   return undefined;
 }
 
@@ -38,6 +43,8 @@ function validateMessage(v: string): string | undefined {
   if (trimmed.length < 10) return "Message must be at least 10 characters";
   if (trimmed.length > 5000) return "Message is too long (max 5000 characters)";
   if (spamPattern.test(trimmed)) return "Message contains invalid content";
+  const abuse = containsAbuse(trimmed);
+  if (abuse) return abuse;
   return undefined;
 }
 
@@ -91,8 +98,10 @@ export default function Contact() {
         const body = await res.json().catch(() => ({}));
         setStatus("error");
         if (body?.error) {
-          if (body.error.includes("@gmail.com")) {
-            setErrors({ email: body.error });
+          if (body.field) {
+            setErrors({ [body.field]: body.error });
+          } else {
+            setErrors({ message: body.error });
           }
         }
       }
