@@ -6,7 +6,6 @@ const links = [
   { label: "Email", value: "bhandaripriyanka028@gmail.com", href: "mailto:bhandaripriyanka028@gmail.com" },
   { label: "GitHub", value: "priyankabhandari22", href: "https://github.com/priyankabhandari22" },
   { label: "LinkedIn", value: "pr-bhandari", href: "https://www.linkedin.com/in/pr-bhandari/" },
-  { label: "LeetCode", value: "priyankabhandari2203", href: "https://leetcode.com/u/priyankabhandari2203" },
   { label: "Location", value: "Mira Road, Mumbai, Maharashtra", href: "https://maps.google.com/?q=Mira+Road+Mumbai+Maharashtra" },
 ];
 
