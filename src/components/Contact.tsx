@@ -4,8 +4,6 @@ import { useState, FormEvent } from "react";
 import SectionWrapper from "./SectionWrapper";
 
 
-const FORMSPREE_ID = "mgobjlzl";
-
 interface Errors {
   name?: string;
   email?: string;
@@ -30,6 +28,7 @@ function validateEmail(v: string): string | undefined {
   if (!trimmed) return "Email is required";
   if (!emailRegex.test(trimmed)) return "Please enter a valid email address";
   if (trimmed.length > 254) return "Email is too long";
+  if (!trimmed.endsWith("@gmail.com")) return "Only @gmail.com emails are accepted";
   return undefined;
 }
 
@@ -79,7 +78,7 @@ export default function Contact() {
 
     setStatus("sending");
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch("/api/contact", {
         method: "POST",
         body: data,
         headers: { Accept: "application/json" },
@@ -89,7 +88,13 @@ export default function Contact() {
         setErrors({});
         form.reset();
       } else {
+        const body = await res.json().catch(() => ({}));
         setStatus("error");
+        if (body?.error) {
+          if (body.error.includes("@gmail.com")) {
+            setErrors({ email: body.error });
+          }
+        }
       }
     } catch {
       setStatus("error");
@@ -118,8 +123,6 @@ export default function Contact() {
         <div className="grid md:grid-cols-2 gap-8 items-start mt-16">
           <SectionWrapper>
             <form
-              action={`https://formspree.io/f/${FORMSPREE_ID}`}
-              method="POST"
               onSubmit={handleSubmit}
               className="panel p-6 md:p-8 space-y-5"
             >
