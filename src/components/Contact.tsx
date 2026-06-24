@@ -1,52 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
 import SectionWrapper from "./SectionWrapper";
-import { containsAbuse } from "@/lib/filter";
-
-
-interface Errors {
-  name?: string;
-  email?: string;
-  message?: string;
-}
-
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const urlPattern = /https?:\/\//i;
-const spamPattern = /(<[^>]*>|http|www\.|\[url\])/i;
-
-function validateName(v: string): string | undefined {
-  const trimmed = v.trim();
-  if (!trimmed) return "Name is required";
-  if (trimmed.length < 2) return "Name must be at least 2 characters";
-  if (trimmed.length > 100) return "Name is too long (max 100 characters)";
-  if (urlPattern.test(trimmed)) return "Name cannot contain URLs";
-  const abuse = containsAbuse(trimmed);
-  if (abuse) return abuse;
-  return undefined;
-}
-
-function validateEmail(v: string): string | undefined {
-  const trimmed = v.trim();
-  if (!trimmed) return "Email is required";
-  if (!emailRegex.test(trimmed)) return "Please enter a valid email address";
-  if (trimmed.length > 254) return "Email is too long";
-  if (!trimmed.endsWith("@gmail.com")) return "Only @gmail.com emails are accepted";
-  const abuse = containsAbuse(trimmed);
-  if (abuse) return abuse;
-  return undefined;
-}
-
-function validateMessage(v: string): string | undefined {
-  const trimmed = v.trim();
-  if (!trimmed) return "Message is required";
-  if (trimmed.length < 10) return "Message must be at least 10 characters";
-  if (trimmed.length > 5000) return "Message is too long (max 5000 characters)";
-  if (spamPattern.test(trimmed)) return "Message contains invalid content";
-  const abuse = containsAbuse(trimmed);
-  if (abuse) return abuse;
-  return undefined;
-}
 
 const socials = [
   { label: "GitHub", href: "https://github.com/priyankabhandari22", icon: (
@@ -64,179 +18,72 @@ const socials = [
 ];
 
 export default function Contact() {
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const [errors, setErrors] = useState<Errors>({});
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    const name = (data.get("name") as string) || "";
-    const email = (data.get("email") as string) || "";
-    const message = (data.get("message") as string) || "";
-
-    const newErrors: Errors = {
-      name: validateName(name),
-      email: validateEmail(email),
-      message: validateMessage(message),
-    };
-    setErrors(newErrors);
-    if (newErrors.name || newErrors.email || newErrors.message) return;
-
-    setStatus("sending");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        body: data,
-        headers: { Accept: "application/json" },
-      });
-      if (res.ok) {
-        setStatus("sent");
-        setErrors({});
-        form.reset();
-      } else {
-        const body = await res.json().catch(() => ({}));
-        setStatus("error");
-        if (body?.error) {
-          if (body.field) {
-            setErrors({ [body.field]: body.error });
-          } else {
-            setErrors({ message: body.error });
-          }
-        }
-      }
-    } catch {
-      setStatus("error");
-    }
-  };
-
   return (
     <section id="contact" className="relative py-16 md:py-28 px-6 scroll-mt-24">
       <div className="max-w-5xl mx-auto">
         <SectionWrapper>
-          <p
-            className="text-cyan-400 text-sm mb-3 tracking-[0.3em] uppercase text-center"
-            style={{ fontFamily: "var(--font-orbitron)" }}
-          >
-            Contact
-          </p>
-          <h2 className="text-3xl md:text-5xl font-bold text-center">
-            <span className="gradient-text">Let&apos;s Connect</span>
-          </h2>
-          <p className="text-gray-400 mt-4 max-w-xl mx-auto text-center">
-            Interested in collaborating, hiring, or building something impactful
-            together? Let&apos;s connect.
-          </p>
+          <div className="text-center mb-12">
+            <p
+              className="text-cyan-400 text-sm mb-3 tracking-[0.3em] uppercase"
+              style={{ fontFamily: "var(--font-orbitron)" }}
+            >
+              Contact
+            </p>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+              <span className="gradient-text">Open to Connect</span>
+            </h2>
+            <p className="text-gray-400 max-w-xl mx-auto text-lg leading-relaxed">
+              Currently available for internships, freelance &amp; collaborations.
+            </p>
+          </div>
         </SectionWrapper>
 
-        <div className="grid md:grid-cols-2 gap-8 items-start mt-16">
+        <div className="grid md:grid-cols-3 gap-6">
           <SectionWrapper>
-            <form
-              onSubmit={handleSubmit}
-              className="panel p-6 md:p-8 space-y-5"
-            >
-              <div>
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  placeholder="Your Name"
-                  onChange={() => setErrors((p) => ({ ...p, name: undefined }))}
-                  onBlur={(e) => {
-                    const err = validateName(e.target.value);
-                    if (err) setErrors((p) => ({ ...p, name: err }));
-                  }}
-                  className="w-full px-4 py-3 rounded-[6px] bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 transition-colors text-sm font-mono"
-                />
-                {errors.name && <p className="text-red-400 text-[11px] mt-1 font-mono">{errors.name}</p>}
+            <a href="mailto:bhandaripriyanka028@gmail.com" className="block panel p-6 space-y-2 group cursor-pointer hover:border-cyan-500/30 transition-all no-underline">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-[6px] bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500/20 transition-colors">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 4l10 8 10-8"/></svg>
+                </div>
+                <p className="text-xs text-gray-500 uppercase tracking-wider font-mono">Email</p>
               </div>
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  placeholder="Your Email"
-                  onChange={() => setErrors((p) => ({ ...p, email: undefined }))}
-                  onBlur={(e) => {
-                    const err = validateEmail(e.target.value);
-                    if (err) setErrors((p) => ({ ...p, email: err }));
-                  }}
-                  className="w-full px-4 py-3 rounded-[6px] bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 transition-colors text-sm font-mono"
-                />
-                {errors.email && <p className="text-red-400 text-[11px] mt-1 font-mono">{errors.email}</p>}
-              </div>
-              <div>
-                <textarea
-                  name="message"
-                  rows={4}
-                  required
-                  placeholder="Your Message"
-                  onChange={() => setErrors((p) => ({ ...p, message: undefined }))}
-                  onBlur={(e) => {
-                    const err = validateMessage(e.target.value);
-                    if (err) setErrors((p) => ({ ...p, message: err }));
-                  }}
-                  className="w-full px-4 py-3 rounded-[6px] bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 transition-colors text-sm font-mono resize-none"
-                />
-                {errors.message && <p className="text-red-400 text-[11px] mt-1 font-mono">{errors.message}</p>}
-              </div>
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="w-full py-3 rounded-[6px] bg-gradient-to-r from-cyan-600 to-amber-500 text-white font-medium text-sm transition-all hover:opacity-90 disabled:opacity-50"
-                style={{ fontFamily: "var(--font-orbitron)", letterSpacing: "0.05em" }}
-              >
-                {status === "sending" ? "Sending..." : "Send Message"}
-              </button>
-              {status === "sent" && (
-                <p className="text-green-400 text-xs text-center font-mono">
-                  ✓ Message sent! I&apos;ll get back to you soon.
-                </p>
-              )}
-              {status === "error" && (
-                <p className="text-red-400 text-xs text-center font-mono">
-                  ✗ Something went wrong. Please try again or email me directly.
-                </p>
-              )}
-            </form>
+              <p className="text-white text-sm break-all">bhandaripriyanka028@gmail.com</p>
+            </a>
           </SectionWrapper>
 
-          <div className="space-y-4">
-            <SectionWrapper>
-              <div className="panel p-6 space-y-1">
-                <p className="text-xs text-gray-500 uppercase tracking-wider font-mono">
-                  Email
-                </p>
-                <p className="text-white text-sm">bhandaripriyanka028@gmail.com</p>
-              </div>
-            </SectionWrapper>
-            <SectionWrapper>
-              <div className="panel p-6 space-y-1">
-                <p className="text-xs text-gray-500 uppercase tracking-wider font-mono">
-                  Location
-                </p>
-                <p className="text-white text-sm">Mira Road ,Mumbai, Maharashtra</p>
-              </div>
-            </SectionWrapper>
-            <SectionWrapper>
-              <div className="panel p-6">
-                <p className="text-xs text-gray-500 uppercase tracking-wider mb-3 font-mono">
-                  Social
-                </p>
-                <div className="flex gap-3">
-                  {socials.map((s) => (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      className="w-10 h-10 rounded-[6px] bg-white/5 border border-white/10 flex items-center justify-center text-xs text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all font-mono"
-                    >
-                      {s.icon}
-                    </a>
-                  ))}
+          <SectionWrapper>
+            <div className="panel p-6 space-y-2">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-[6px] bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 </div>
+                <p className="text-xs text-gray-500 uppercase tracking-wider font-mono">Location</p>
               </div>
-            </SectionWrapper>
-          </div>
+              <p className="text-white text-sm">Mira Road, Mumbai, Maharashtra</p>
+            </div>
+          </SectionWrapper>
+
+          <SectionWrapper>
+            <div className="panel p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-[6px] bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                </div>
+                <p className="text-xs text-gray-500 uppercase tracking-wider font-mono">Social</p>
+              </div>
+              <div className="flex gap-3">
+                {socials.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    className="w-10 h-10 rounded-[6px] bg-white/5 border border-white/10 flex items-center justify-center text-xs text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all font-mono"
+                  >
+                    {s.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </SectionWrapper>
         </div>
       </div>
     </section>
