@@ -126,15 +126,10 @@ export default function Experience() {
     <section id="experience" className="relative py-16 md:py-28 px-6 scroll-mt-24">
       <div className="max-w-4xl mx-auto">
         <SectionWrapper>
-          <p
-            className="text-cyan-400 text-sm mb-3 tracking-[0.3em] uppercase text-center"
-            style={{ fontFamily: "var(--font-orbitron)" }}
-          >
-            Experience
-          </p>
-          <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 md:mb-16">
-            <span className="gradient-text">My Journey</span>
-          </h2>
+          <div className="section-head">
+            <h2 className="section-title" data-text="Experience">Experience</h2>
+            <span className="section-underline" />
+          </div>
         </SectionWrapper>
 
         <div className="relative">

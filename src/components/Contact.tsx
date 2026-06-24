@@ -7,6 +7,7 @@ const links = [
   { label: "GitHub", value: "priyankabhandari22", href: "https://github.com/priyankabhandari22" },
   { label: "LinkedIn", value: "pr-bhandari", href: "https://www.linkedin.com/in/pr-bhandari/" },
   { label: "LeetCode", value: "priyankabhandari2203", href: "https://leetcode.com/u/priyankabhandari2203" },
+  { label: "Location", value: "Mira Road, Mumbai, Maharashtra", href: "https://maps.google.com/?q=Mira+Road+Mumbai+Maharashtra" },
 ];
 
 export default function Contact() {
@@ -15,16 +16,11 @@ export default function Contact() {
       <div className="max-w-5xl mx-auto">
         <div className="grid md:grid-cols-2 items-start gap-8">
           <SectionWrapper>
-            <p
-              className="text-cyan-400 text-xs tracking-[0.3em] uppercase mb-2"
-              style={{ fontFamily: "var(--font-orbitron)" }}
-            >
-              Contact
-            </p>
-            <h2 className="text-[clamp(3rem,8vw,6rem)] font-bold leading-[0.9] mb-5">
-              Let&apos;s<br />Connect
-            </h2>
-            <p className="text-gray-400 text-[clamp(0.9rem,1.7vw,1.05rem)] max-w-[31ch] leading-relaxed">
+            <div className="section-head">
+              <h2 className="section-title" data-text="Contact">Contact</h2>
+              <span className="section-underline" />
+            </div>
+            <p className="text-gray-400 text-[clamp(0.9rem,1.7vw,1.05rem)] max-w-[31ch] leading-relaxed mt-6">
               Currently available for internships, freelance &amp; collaborations.
             </p>
           </SectionWrapper>
