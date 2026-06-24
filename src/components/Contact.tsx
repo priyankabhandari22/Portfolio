@@ -16,11 +16,16 @@ export default function Contact() {
       <div className="max-w-5xl mx-auto">
         <div className="grid md:grid-cols-2 items-start gap-8">
           <SectionWrapper>
-            <div className="section-head">
-              <h2 className="section-title" data-text="Contact">Contact</h2>
-              <span className="section-underline" />
-            </div>
-            <p className="text-gray-400 text-[clamp(0.9rem,1.7vw,1.05rem)] max-w-[31ch] leading-relaxed mt-6">
+            <p
+              className="text-cyan-400 text-sm mb-3 tracking-[0.3em] uppercase"
+              style={{ fontFamily: "var(--font-orbitron)" }}
+            >
+              Contact
+            </p>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+              <span className="gradient-text">Get in Touch</span>
+            </h2>
+            <p className="text-gray-400 text-base max-w-[31ch] leading-relaxed">
               Currently available for internships, freelance &amp; collaborations.
             </p>
           </SectionWrapper>
