@@ -2,86 +2,51 @@
 
 import SectionWrapper from "./SectionWrapper";
 
-const socials = [
-  { label: "GitHub", href: "https://github.com/priyankabhandari22", icon: (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-  )},
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/pr-bhandari/", icon: (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-  )},
-  { label: "Email", href: "mailto:bhandaripriyanka028@gmail.com", icon: (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 4l10 8 10-8"/></svg>
-  )},
-  { label: "LeetCode", href: "https://leetcode.com/u/priyankabhandari2203", icon: (
-    <span className="w-5 h-5 flex items-center justify-center text-xs font-bold border border-current rounded">LC</span>
-  )},
+const links = [
+  { label: "Email", value: "bhandaripriyanka028@gmail.com", href: "mailto:bhandaripriyanka028@gmail.com" },
+  { label: "GitHub", value: "priyankabhandari22", href: "https://github.com/priyankabhandari22" },
+  { label: "LinkedIn", value: "pr-bhandari", href: "https://www.linkedin.com/in/pr-bhandari/" },
+  { label: "LeetCode", value: "priyankabhandari2203", href: "https://leetcode.com/u/priyankabhandari2203" },
 ];
 
 export default function Contact() {
   return (
     <section id="contact" className="relative py-16 md:py-28 px-6 scroll-mt-24">
       <div className="max-w-5xl mx-auto">
-        <SectionWrapper>
-          <div className="text-center mb-12">
+        <div className="grid md:grid-cols-2 items-start gap-8">
+          <SectionWrapper>
             <p
-              className="text-cyan-400 text-sm mb-3 tracking-[0.3em] uppercase"
+              className="text-cyan-400 text-xs tracking-[0.3em] uppercase mb-2"
               style={{ fontFamily: "var(--font-orbitron)" }}
             >
               Contact
             </p>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
-              <span className="gradient-text">Open to Connect</span>
+            <h2 className="text-[clamp(3rem,8vw,6rem)] font-bold leading-[0.9] mb-5">
+              Let&apos;s<br />Connect
             </h2>
-            <p className="text-gray-400 max-w-xl mx-auto text-lg leading-relaxed">
+            <p className="text-gray-400 text-[clamp(0.9rem,1.7vw,1.05rem)] max-w-[31ch] leading-relaxed">
               Currently available for internships, freelance &amp; collaborations.
             </p>
-          </div>
-        </SectionWrapper>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          <SectionWrapper>
-            <a href="mailto:bhandaripriyanka028@gmail.com" className="block panel p-6 space-y-2 group cursor-pointer hover:border-cyan-500/30 transition-all no-underline">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-[6px] bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500/20 transition-colors">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 4l10 8 10-8"/></svg>
-                </div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider font-mono">Email</p>
-              </div>
-              <p className="text-white text-sm break-all">bhandaripriyanka028@gmail.com</p>
-            </a>
           </SectionWrapper>
 
           <SectionWrapper>
-            <div className="panel p-6 space-y-2">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-[6px] bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                </div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider font-mono">Location</p>
-              </div>
-              <p className="text-white text-sm">Mira Road, Mumbai, Maharashtra</p>
-            </div>
-          </SectionWrapper>
-
-          <SectionWrapper>
-            <div className="panel p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-[6px] bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-                </div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider font-mono">Social</p>
-              </div>
-              <div className="flex gap-3">
-                {socials.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    className="w-10 h-10 rounded-[6px] bg-white/5 border border-white/10 flex items-center justify-center text-xs text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all font-mono"
-                  >
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
+            <div className="flex flex-col gap-2">
+              {links.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="group grid grid-cols-[minmax(72px,95px)_1fr_auto] items-center gap-3 py-3 border-b border-white/10 no-underline transition-colors duration-300 hover:text-cyan-400 relative"
+                >
+                  <span className="text-gray-500 text-xs uppercase tracking-wider font-mono">{link.label}</span>
+                  <span className="text-white text-[clamp(1rem,2.1vw,1.45rem)] group-hover:text-cyan-400 transition-colors">
+                    {link.value}
+                  </span>
+                  <span className="text-cyan-400 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-lg">
+                    &rarr;
+                  </span>
+                  <span className="absolute bottom-0 left-0 h-[1px] bg-cyan-400 w-0 group-hover:w-full transition-all duration-300" />
+                </a>
+              ))}
             </div>
           </SectionWrapper>
         </div>
